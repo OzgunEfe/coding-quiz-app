@@ -1,8 +1,8 @@
 var questions = [
     {
       title: 'Inside which HTML element do we put the JavaScript?',
-      choices: ['<js>', '<scripting>', '<javascript>', '<script>'],
-      answer: '<script>'
+      choices: ['js', 'scripting', 'javascript', 'script'],
+      answer: 'script'
     },
     {
       title: 'How does a FOR loop start?',
@@ -25,5 +25,4 @@ var questions = [
       answer: 'onclick'
     }
 ]
-
 
