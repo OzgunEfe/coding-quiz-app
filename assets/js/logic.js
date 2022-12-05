@@ -5,9 +5,24 @@ var startQuizfunc = document.querySelector("#start");
 var startScreen = document.querySelector("#start-screen");
 var feedback = document.querySelector("#feedback");
 var time = document.querySelector("#time");
+var endScreen = document.querySelector("#end-screen");
+var finalScore = document.querySelector("#final-score");
 
 var currentQuestionIndex = 0;
 var timerScore = 60;
+
+function startTimer() {
+  var countDown = setInterval(() => {
+    time.innerHTML = timerScore;
+    timerScore--;
+    if (timerScore < 0 || currentQuestionIndex > 5) {
+      clearInterval(countDown);
+      timerScore = 0;
+      time.innerHTML = 0;
+      showResult()
+    }
+  }, 1000);
+}
 
 function startQuiz() {
   var currentQuestion = questions[currentQuestionIndex];
@@ -19,8 +34,6 @@ function startQuiz() {
 
   for (var i = 0; i < choices.length; i++) {
     var choice = choices[i];
-    var isCorrect = currentQuestion.answer === choice;
-    console.log(choice);
 
     choicesQutput.insertAdjacentHTML(
       "beforeend",
@@ -29,19 +42,7 @@ function startQuiz() {
     `
     );
   }
-
   questionWrap.classList.remove("hide");
-}
-
-function startTimer() {
-  var countDown = setInterval(() => {
-    time.innerHTML = timerScore;
-    timerScore--;
-    if (timerScore < 0){
-      clearInterval(countDown);
-      time.innerHTML = 0;
-    }
-  }, 1000);
 }
 
 function correctSoundEffect() {
@@ -59,15 +60,26 @@ function worngSoundEffect() {
 function checkAnswer(event) {
   var currentQuestion = questions[currentQuestionIndex];
   var selectedAnswer = event.target.value;
-  if (selectedAnswer === currentQuestion.answer) {
+
+  if (selectedAnswer == currentQuestion.answer) {
     feedback.classList.remove("hide");
     feedback.innerText = "Correct!";
     correctSoundEffect();
     setTimeout(() => {
       clearAll();
       currentQuestionIndex++;
-      startQuiz();
+      if (timerScore == 0) {
+        clearAll();
+        showResult()
+      } else {
+        startQuiz();
+      }
     }, 900);
+    if (currentQuestionIndex > 4) {
+      clearAll();
+      endScreen.classList.remove("hide");
+      finalScore.innerText = timerScore;
+    }
   } else {
     feedback.classList.remove("hide");
     feedback.innerText = "Worng!";
@@ -76,12 +88,19 @@ function checkAnswer(event) {
     setTimeout(() => {
       clearAll();
       currentQuestionIndex++;
-      startQuiz();
+      if (timerScore == 0) {
+        clearAll();
+        showResult()
+      } else {
+        startQuiz();
+      }
     }, 900);
+    if (currentQuestionIndex > 4) {
+      clearAll();
+      endScreen.classList.remove("hide");
+      finalScore.innerText = timerScore + 1;
+    }
   }
-
-  console.log(timerScore);
-  console.log(selectedAnswer);
 }
 
 function clearAll() {
@@ -89,6 +108,12 @@ function clearAll() {
   choicesQutput.innerHTML = "";
   feedback.innerHTML = "";
   feedback.classList.add("hide");
+}
+
+function showResult() {
+  questionWrap.classList.add("hide");
+  endScreen.classList.remove("hide");
+  finalScore.innerText = timerScore;
 }
 
 startQuizfunc.addEventListener("click", startQuiz);

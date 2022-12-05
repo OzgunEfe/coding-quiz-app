@@ -5,24 +5,29 @@ var questions = [
       answer: 'script'
     },
     {
-      title: 'How does a FOR loop start?',
-      choices: ['for i = 1 to 5', 'for (i = 0; i <= 5)', 'for (i = 0; i <= 5; i++)', 'for (i <= 5; i++)'],
-      answer: 'for (i = 0; i <= 5; i++)'
+      title: 'Commonly used data types DO Not Include:',
+      choices: ['strings', 'booleans', 'alerts', 'numbers'],
+      answer: 'alerts'
     },
     {
-      title: 'How do you write "Hello World" in an alert box?',
-      choices: ['msg("Hello World");', 'alertBox("Hello World");', 'msgBox("Hello World");', 'alert("Hello World");'],
-      answer: 'alert("Hello World");'
-    },
-    {
-      title: 'What is the correct way to write a JavaScript array?',
-      choices: ['var colors = 1 = ("red"), 2 = ("green"), 3 = ("blue")', 'var colors = "red", "green", "blue"', 'var colors = (1:"red", 2:"green", 3:"blue")', 'var colors = ["red", "green", "blue"]'],
-      answer: 'var colors = ["red", "green", "blue"]'
+      title: 'The condition in an if / else statement is enclosed with _______.',
+      choices: ['quotes', 'curly brackets', 'parenthesis', 'square brackets'],
+      answer: 'parenthesis'
     },
     {
       title: 'Which event occurs when the user clicks on an HTML element?',
-      choices: ['onmouseover', 'onmouseclick', 'onchange', 'onclick'],
+      choices: ['onclick', 'onmouseclick', 'onchange', 'onmouseover'],
       answer: 'onclick'
+    },
+    {
+      title: 'String values must be enclosed within _______ when being assigned to variables.',
+      choices: ['commas', 'curly brackets', 'quotes', 'parenthesis'],
+      answer: 'quotes'
+    },
+    {
+      title: 'A very useful tool used during development and debugging for printing content to the debugger is:',
+      choices: ['JavaScript', 'terminal/bash', 'for loops', 'console.log'],
+      answer: 'console.log'
     }
 ]
 
