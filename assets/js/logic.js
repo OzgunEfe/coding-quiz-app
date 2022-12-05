@@ -4,11 +4,10 @@ var choicesQutput = document.querySelector("#choices");
 var startQuizfunc = document.querySelector("#start");
 var startScreen = document.querySelector("#start-screen");
 var feedback = document.querySelector("#feedback");
-var timer = document.querySelector("#time");
-var timerStart = document.querySelector("#start-button");
-
+var time = document.querySelector("#time");
 
 var currentQuestionIndex = 0;
+var timerScore = 60;
 
 function startQuiz() {
   var currentQuestion = questions[currentQuestionIndex];
@@ -34,18 +33,28 @@ function startQuiz() {
   questionWrap.classList.remove("hide");
 }
 
+function startTimer() {
+  var countDown = setInterval(() => {
+    time.innerHTML = timerScore;
+    timerScore--;
+    if (timerScore < 0){
+      clearInterval(countDown);
+      time.innerHTML = 0;
+    }
+  }, 1000);
+}
+
 function correctSoundEffect() {
   var audio = new Audio();
-  audio.src = "assets/sfx/correct.wav"
+  audio.src = "assets/sfx/correct.wav";
   audio.play();
 }
 
 function worngSoundEffect() {
   var audio = new Audio();
-  audio.src = "assets/sfx/incorrect.wav"
+  audio.src = "assets/sfx/incorrect.wav";
   audio.play();
 }
-
 
 function checkAnswer(event) {
   var currentQuestion = questions[currentQuestionIndex];
@@ -56,20 +65,22 @@ function checkAnswer(event) {
     correctSoundEffect();
     setTimeout(() => {
       clearAll();
-      currentQuestionIndex = currentQuestionIndex + 1;
+      currentQuestionIndex++;
       startQuiz();
     }, 900);
   } else {
     feedback.classList.remove("hide");
     feedback.innerText = "Worng!";
     worngSoundEffect();
+    timerScore = timerScore - 20;
     setTimeout(() => {
       clearAll();
-      currentQuestionIndex = currentQuestionIndex + 1;
+      currentQuestionIndex++;
       startQuiz();
-    }, 900)
+    }, 900);
   }
 
+  console.log(timerScore);
   console.log(selectedAnswer);
 }
 
@@ -81,4 +92,5 @@ function clearAll() {
 }
 
 startQuizfunc.addEventListener("click", startQuiz);
+startQuizfunc.addEventListener("click", startTimer);
 choicesQutput.addEventListener("click", checkAnswer);
