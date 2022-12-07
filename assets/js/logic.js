@@ -123,7 +123,11 @@ function worngSoundEffect() {
   audio.play();
 }
 
+
 function initials() {
+
+  var scoreList = []
+
   var inputText = document.getElementById("initials").value;
 
   if (timerScore === 0) {
@@ -133,11 +137,13 @@ function initials() {
   }
 
   var initial = {
-    initial: inputText,
+    user: inputText,
     score: userScore,
   }
 
-  var scoreListJSON = JSON.stringify(initial);
+  scoreList.push(initial);
+
+  var scoreListJSON = JSON.stringify(scoreList);
 
   localStorage.setItem("initials", scoreListJSON);
 
