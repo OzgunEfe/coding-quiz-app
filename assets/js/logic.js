@@ -11,6 +11,8 @@ var finalScore = document.querySelector("#final-score");
 var initialsInput = document.querySelector("#initials");
 var submitButton = document.querySelector("#submit");
 var form = document.querySelector("form");
+var scores = document.querySelector("#highscores");
+var inputText = document.querySelector("#initials");
 
 var currentQuestionIndex = 0;
 var timerScore = 60;
@@ -123,31 +125,42 @@ function worngSoundEffect() {
   audio.play();
 }
 
+function saveScoreList(arr) {
+  localStorage.setItem("highScores", JSON.stringify(arr));
+}
+
+function getScoreList() {
+  return JSON.parse(localStorage.getItem("highScores")) || [];
+}
+
+export function displayScoreList() {
+  var scoreList = getScoreList();
+
+  scoreList.forEach(function(scoreList, index){
+    scores.insertAdjacentHTML("afterbegin", `<li><span>${scoreList[index]}</span></li>`);
+  });
+
+}
 
 function initials() {
+  var scoreList = getScoreList();
+  var userName = inputText.value;
 
-  var scoreList = []
-
-  var inputText = document.getElementById("initials").value;
+  if (!userName) return;
 
   if (timerScore === 0) {
-    userScore = 0;
+    var userScore = 0;
   } else {
-    userScore = timerScore + 2;
+    var userScore = timerScore + 2;
   }
 
-  var initial = {
-    user: inputText,
-    score: userScore,
-  }
+  var highScore = `${userName} - ${userScore}`;
 
-  scoreList.push(initial);
+  scoreList.push(highScore);
+  saveScoreList(scoreList);
 
-  var scoreListJSON = JSON.stringify(scoreList);
+  displayScoreList()
 
-  localStorage.setItem("initials", scoreListJSON);
-
-  window.location.href = "highscores.html";
 }
 
 startQuizfunc.addEventListener("click", startQuiz);
